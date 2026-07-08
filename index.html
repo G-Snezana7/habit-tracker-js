@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Мой трекер привычек</title>
+    <link rel="stylesheet" href="style.css" />
+    <script type="module" defer src="./main.js"></script>
+  </head>
+  <body>
+    <main class="tracker">
+      <h1 class="tracker__title">Мой трекер привычек</h1>
+
+      <div class="habit-form">
+        <input
+          class="habit-form__input"
+          id="input-js"
+          type="text"
+          placeholder="Новая привычка"
+        />
+        <button class="habit-form__button btn-reset" id="add-button-js">
+          Добавить
+        </button>
+      </div>
+      <ul class="tracker__list list-reset" id="list-js"></ul>
+    </main>
+  </body>
+</html>

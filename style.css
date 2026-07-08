@@ -1,0 +1,298 @@
+:root {
+  /* Базовые цвета */
+  --bg-main: rgb(203, 168, 237);
+  /* Твоя лаванда для фона страницы */
+  --bg-card: #ffffff;
+  /* Белый фон для трекера и карточек */
+  --text-main: #1e1b4b;
+  /* Глубокий темно-чернильный для текста (читается лучше черного) */
+  --text-muted: #6b7280;
+  /* Серый для подсказок и второстепенного текста */
+
+  /* Цвета элементов управления (Кнопки, фокусы) */
+  --primary: #6d28d9;
+  /* Насыщенный фиолетовый для активных кнопок */
+  --primary-hover: #5b21b6;
+  /* Темно-фиолетовый при наведении */
+  --border-color: #e4e4e7;
+  /* Светло-серая граница для инпутов */
+
+  /* Константы размеров */
+  --tracker-max-width: 26rem;
+  /* Оптимальная ширина для десктопа */
+  --font-family: "Outfit", sans-serif;
+  --radius: 1rem;
+  /* Скругление для карточек (16px) */
+  --radius-sm: 0.5rem;
+  /* Скругление для кнопок и инпутов (8px) */
+}
+
+
+@font-face {
+  font-family: "Outfit";
+  src: url("../fonts/OutfitRegular.woff2") format("woff2"),
+    url("../fonts/OutfitRegular.woff") format("woff");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Outfit";
+  src: url("../fonts/OutfitBold.woff2") format("woff2"),
+    url("../fonts/OutfitBold.woff") format("woff");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+html {
+  box-sizing: border-box;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: inherit;
+}
+
+img,
+svg {
+  max-width: 100%;
+  height: auto;
+}
+
+.btn-reset {
+  padding: 0;
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+}
+
+.list-reset {
+  margin-top: 0;
+  margin-bottom: 0;
+  padding-left: 0;
+  list-style: none;
+}
+
+/* ==========================================================================
+   БАЗОВЫЕ СТИЛИ ДЛЯ МОБИЛЬНЫХ (Mobile First)
+   ========================================================================== */
+body {
+  margin: 0;
+  background-color: var(--bg-main);
+  font-family: var(--font-family);
+  padding: 1rem;
+  color: var(--text-main);
+  -webkit-font-smoothing: antialiased;
+  /* Делает шрифты более гладкими */
+}
+
+/* Главный контейнер трекера */
+.tracker {
+  width: 100%;
+  min-height: calc(100vh - 2rem);
+  background-color: var(--bg-card);
+  padding: 1.5rem;
+  border-radius: var(--radius);
+  box-shadow: 0 10px 25px -5px rgba(109, 40, 217, 0.2);
+  /* Мягкая фиолетовая тень */
+  display: flex;
+  flex-direction: column;
+}
+
+/* Заголовок */
+.tracker__title {
+  font-size: 1.75rem;
+  font-weight: 700;
+  margin-top: 0;
+  margin-bottom: 1.5rem;
+  text-align: center;
+  letter-spacing: -0.02em;
+}
+
+/* Блок формы добавления (habit-form) */
+.habit-form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin-bottom: 2rem;
+}
+
+.habit-form__input {
+  width: 100%;
+  padding: 0.875rem 1rem;
+  border: 2px solid var(--border-color);
+  border-radius: var(--radius-sm);
+  font-family: inherit;
+  font-size: 1rem;
+  color: var(--text-main);
+  transition: border-color 0.2s;
+  background-color: #fafafa;
+}
+
+/* Красивый фокус для инпута */
+.habit-form__input:focus {
+  outline: none;
+  border-color: var(--primary);
+  background-color: var(--bg-card);
+}
+
+.habit-form__button {
+  width: 100%;
+  padding: 0.875rem;
+  background-color: var(--primary);
+  color: white;
+  border-radius: var(--radius-sm);
+  font-weight: 700;
+  font-size: 1rem;
+  text-align: center;
+  transition: background-color 0.2s, transform 0.1s;
+}
+
+.habit-form__button:active {
+  transform: scale(0.98);
+  /* Эффект нажатия кнопки пальцем */
+}
+
+/* Список привычек */
+.tracker__list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+/* Стили для будущей карточки привычки (генерируется через JS) */
+/* Карточка-контейнер */
+/* Карточка привычки */
+.habit-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start; /* Выравниваем текст и кнопку по верхнему краю */
+  padding: 1rem;
+  background-color: #f8fafc;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm);
+}
+
+/* Текст внутри карточки */
+.habit-item__text {
+  font-size: 1rem;
+  font-weight: 400;
+  flex-grow: 1;            /* Занимает всё свободное место слева */
+  margin-right: 1rem;      /* Делает безопасный отступ до кнопки */
+  
+  /* Магия для переноса длинных бессмысленных строк без пробелов: */
+  overflow-wrap: anywhere; 
+  word-break: break-all;   
+}
+
+/* Кнопка-счетчик внутри карточки */
+.counter-btn {
+  /* Фиксируем размеры кнопки, чтобы она была аккуратным квадратиком */
+  min-width: 2.5rem;
+  height: 2.5rem;
+  padding: 0 0.5rem;
+  
+  background-color: #f1f5f9;
+  border: 1px solid #cbd5e1;
+  border-radius: var(--radius-sm);
+  font-family: inherit;
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--primary);
+  
+  /* Центрируем текст внутри кнопки */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  
+  flex-shrink: 0; /* Наша железная защита от сжатия */
+  transition: all 0.2s;
+}
+
+.counter-btn:not(.disabled):hover {
+  background-color: var(--primary);
+  color: white;
+  border-color: var(--primary);
+}
+
+/* Стиль для заблокированной кнопки */
+.counter-btn.disabled {
+  background-color: #e2e8f0;
+  color: #10b981; /* Сделаем галочку и цифру зеленой, ведь привычка выполнена! */
+  border-color: #a7f3d0;
+  cursor: not-allowed;
+  opacity: 1; /* Убираем блеклость, пусть зеленая галочка горит ярко */
+}
+
+/* Контейнер для кнопок внутри карточки */
+.habit-item__controls {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem; /* Отступ между счетчиком и крестиком */
+  flex-shrink: 0; /* Защита от сжатия всей группы кнопок */
+}
+
+/* Кнопка удаления (крестик) */
+.delete-btn {
+  width: 2.5rem;
+  height: 2.5rem;
+  border: none;
+  background-color: transparent;
+  color: #ef4444; /* Красный цвет */
+  font-size: 1.1rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-sm);
+  transition: background-color 0.2s;
+}
+
+.delete-btn:hover {
+  background-color: #fee2e2; /* Мягкий красный фон при наведении */
+}
+
+/* СТИЛЬ ДЛЯ ЗАБЛОКИРОВАННОЙ КНОПКИ «ДОБАВИТЬ» */
+.habit-form__button.disabled {
+  background-color: #cbd5e1; /* Серый цвет */
+  color: #94a3b8;
+  cursor: not-allowed;
+  transform: none; /* Отменяем эффект нажатия для неактивной кнопки */
+}
+
+
+/* ==========================================================================
+   АДАПТИВ ДЛЯ БОЛЬШИХ ЭКРАНОВ (Планшеты и ПК)
+   ========================================================================== */
+@media (min-width: 576px) {
+  body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 2rem;
+  }
+
+  .tracker {
+    max-width: var(--tracker-max-width);
+    min-height: auto;
+    /* На ПК карточка принимает высоту контента */
+    padding: 2rem;
+  }
+
+  .habit-form {
+    flex-direction: row;
+    /* На ПК инпут и кнопка выстраиваются в ряд */
+    gap: 0.5rem;
+  }
+
+  .habit-form__button {
+    width: auto;
+    white-space: nowrap;
+    /* Чтобы текст кнопки не переносился */
+    padding: 0.875rem 1.5rem;
+  }
+}
