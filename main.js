@@ -29,39 +29,37 @@ const validateInput = () => {
   }
 };
 
-// Отрисовка списка привычек
+// Отрисовка списка привычек с поддержкой доступности (a11y)
 const renderList = () => {
   listHabit.innerHTML = ''; 
   const todayStr = getTodayDateString(); 
 
   arrHabit.forEach((item) => {
-    // Создаем строку списка
     const li = document.createElement('li');
     li.classList.add('habit-item'); 
     
-    // Создаем текст
     const textSpan = document.createElement('span');
     textSpan.textContent = item.text;
     textSpan.classList.add('habit-item__text');
     
-    // Создаем контейнер для кнопок управления (чтобы они стояли рядышком справа)
     const controlsDiv = document.createElement('div');
-    controlsDiv.classList.add('habit-item__controls'); // Добавим этот класс во флекс в CSS
+    controlsDiv.classList.add('habit-item__controls'); 
     
-    // Создаем кнопку-счетчик
     const counterBtn = document.createElement('button');
     counterBtn.classList.add('counter-btn');
+    
+    // ДОСТУПНОСТЬ: Добавляем понятное описание для кнопки-счетчика
+    counterBtn.setAttribute('aria-label', `Отметить прогресс по привычке. Текущий счет: ${item.count}`);
 
-    // Проверка блокировки клика по дате
     if (item.lastClickDate === todayStr) {
       counterBtn.disabled = true;
       counterBtn.classList.add('disabled');
       counterBtn.textContent = `✓ ${item.count}`; 
+      counterBtn.setAttribute('aria-label', `Привычка уже отмечена сегодня. Всего выполнено раз: ${item.count}`);
     } else {
       counterBtn.textContent = item.count; 
     }
     
-    // Слушатель клика по счетчику
     counterBtn.addEventListener('click', () => {
       if (item.lastClickDate === todayStr) return;
       item.count++; 
@@ -70,27 +68,25 @@ const renderList = () => {
       renderList(); 
     });
 
-    // Создаем кнопку удаления (крестик)
     const deleteBtn = document.createElement('button');
     deleteBtn.textContent = '✕';
-    deleteBtn.classList.add('delete-btn'); // Новый класс для стилизации в CSS
+    deleteBtn.classList.add('delete-btn');
     
-    // Слушатель клика для удаления (Иммутабельный подход через .filter())
+    // ДОСТУПНОСТЬ: Обозначаем для скринридеров, что делает кнопка-крестик
+    deleteBtn.setAttribute('aria-label', `Удалить привычку: "${item.text}"`);
+    
     deleteBtn.addEventListener('click', () => {
-      // Оставляем в массиве только те элементы, у которых ID НЕ СОВПАДАЕТ с текущим
       arrHabit = arrHabit.filter(habit => habit.id !== item.id);
-      saveToLocalStorage(); // Обновляем память
-      renderList(); // Перерисовываем экран
+      saveToLocalStorage(); 
+      renderList(); 
     });
 
-    // Собираем элементы управления вместе
     controlsDiv.append(counterBtn, deleteBtn);
-    
-    // Собираем всю карточку целиком
     li.append(textSpan, controlsDiv);
     listHabit.append(li);
   });
 };
+
 
 // Функция добавления новой привычки
 const saveValue = () => {
