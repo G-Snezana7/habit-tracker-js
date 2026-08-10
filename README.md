@@ -2,7 +2,7 @@
 
 Мини-приложение для отслеживания ежедневного прогресса выполнения привычек, полностью спроектированное и разработанное на чистом JavaScript (Vanilla JS) с геймификацией логики и сохранением сессии.
 ## 🚀 Демонстрация проекта
-* **Живой сайт (GitHub Pages):** https://g-snezana7.github.io/advice-generator-vue/
+* **Живой сайт (GitHub Pages):** [https://g-snezana7.github.io/advice-generator-vue/](https://g-snezana7.github.io/habit-tracker-js/)
 
 ## 🛠️ Стек технологий и архитектура
 
